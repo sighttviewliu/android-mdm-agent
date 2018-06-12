@@ -278,9 +278,9 @@ public class MQTTService extends Service implements MqttCallback {
             // If TLS is active needs ssl connection option
             if(mTLS.equals("1")) {
                 // SSL
-                //SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
-                //sslContext.init(null, null, null);
-                SSLSocketFactory TLSSocketFactory = new TLSSocketFactory();
+                SSLContext sslContext = SSLContext.getInstance("TLS");
+                sslContext.init(null, null, null);
+                SSLSocketFactory TLSSocketFactory = new TLSSocketFactory(sslContext.getSocketFactory());
                 options.setSocketFactory(TLSSocketFactory);
             }
 

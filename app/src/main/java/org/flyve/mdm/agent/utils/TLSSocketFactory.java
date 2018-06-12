@@ -24,6 +24,10 @@ public class TLSSocketFactory extends SSLSocketFactory {
         internalSSLSocketFactory = context.getSocketFactory();
     }
 
+    public TLSSocketFactory(SSLSocketFactory factory) {
+        internalSSLSocketFactory = factory;
+    }
+
     @Override
     public String[] getDefaultCipherSuites() {
         return internalSSLSocketFactory.getDefaultCipherSuites();
