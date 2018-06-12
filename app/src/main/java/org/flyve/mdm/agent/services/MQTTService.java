@@ -69,7 +69,6 @@ import org.flyve.mdm.agent.policies.StatusBarPolicy;
 import org.flyve.mdm.agent.policies.StorageEncryptionPolicy;
 import org.flyve.mdm.agent.policies.StreamAccessibilityPolicy;
 import org.flyve.mdm.agent.policies.StreamAlarmPolicy;
-import org.flyve.mdm.agent.policies.StreamDTMFPolicy;
 import org.flyve.mdm.agent.policies.StreamMusicPolicy;
 import org.flyve.mdm.agent.policies.StreamNotificationPolicy;
 import org.flyve.mdm.agent.policies.StreamRingPolicy;
@@ -82,6 +81,7 @@ import org.flyve.mdm.agent.policies.WifiPolicy;
 import org.flyve.mdm.agent.ui.MainActivity;
 import org.flyve.mdm.agent.utils.FlyveLog;
 import org.flyve.mdm.agent.utils.Helpers;
+import org.flyve.mdm.agent.utils.NoSSLv3SocketFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -90,6 +90,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
 
 /**
  * This is the service get and send message from MQTT
@@ -279,7 +280,8 @@ public class MQTTService extends Service implements MqttCallback {
                 // SSL
                 SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
                 sslContext.init(null, null, null);
-                options.setSocketFactory(sslContext.getSocketFactory());
+                SSLSocketFactory NoSSLv3Factory = new NoSSLv3SocketFactory(sslContext.getSocketFactory());
+                options.setSocketFactory(NoSSLv3Factory);
             }
 
             IMqttToken token = client.connect(options);
