@@ -81,7 +81,7 @@ import org.flyve.mdm.agent.policies.WifiPolicy;
 import org.flyve.mdm.agent.ui.MainActivity;
 import org.flyve.mdm.agent.utils.FlyveLog;
 import org.flyve.mdm.agent.utils.Helpers;
-import org.flyve.mdm.agent.utils.NoSSLv3SocketFactory;
+import org.flyve.mdm.agent.utils.TLSSocketFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -278,10 +278,10 @@ public class MQTTService extends Service implements MqttCallback {
             // If TLS is active needs ssl connection option
             if(mTLS.equals("1")) {
                 // SSL
-                SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
-                sslContext.init(null, null, null);
-                SSLSocketFactory NoSSLv3Factory = new NoSSLv3SocketFactory(sslContext.getSocketFactory());
-                options.setSocketFactory(NoSSLv3Factory);
+                //SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
+                //sslContext.init(null, null, null);
+                SSLSocketFactory TLSSocketFactory = new TLSSocketFactory();
+                options.setSocketFactory(TLSSocketFactory);
             }
 
             IMqttToken token = client.connect(options);
